@@ -18,4 +18,9 @@ class SMSRU implements ProviderInterface
 
         return 0.0;
     }
+
+    public function send($phone, $message)
+    {
+        // TODO: Implement send() method.
+    }
 }

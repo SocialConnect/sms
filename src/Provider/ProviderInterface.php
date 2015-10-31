@@ -12,4 +12,12 @@ interface ProviderInterface
      * @return float
      */
     public function getBalance();
+
+    /**
+     * @param string|integer $phone
+     * @param string $message
+     * @return mixed
+     */
+    public function send($phone, $message);
+
 }
