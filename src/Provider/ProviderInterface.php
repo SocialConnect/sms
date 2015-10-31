@@ -8,5 +8,8 @@ namespace SocialConnect\SMS\Provider;
 
 interface ProviderInterface
 {
-
+    /**
+     * @return float
+     */
+    public function getBalance();
 }

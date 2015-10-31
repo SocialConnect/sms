@@ -7,5 +7,15 @@ namespace SocialConnect\SMS\Provider;
 
 class Nexmo implements ProviderInterface
 {
+    public function request($uri)
+    {
 
+    }
+
+    public function getBalance()
+    {
+        $result = $this->request('account/get-balance/');
+
+        return 0.0;
+    }
 }
