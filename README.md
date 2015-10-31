@@ -1,7 +1,14 @@
-SMS
-======
+SocialConnect SMS
+=================
 
+## Supported providers
 
-# LICENSE
+- [x] SMS.RU
+- [x] Nexmo
+- [ ] 
 
-MIT
+# License
+
+This project is open-sourced software licensed under the MIT License.
+
+See the LICENSE file for more information.
