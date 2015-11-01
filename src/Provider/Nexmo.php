@@ -5,11 +5,43 @@
 
 namespace SocialConnect\SMS\Provider;
 
+use SocialConnect\Common\Http\Client\Client;
+use SocialConnect\Common\Http\Client\ClientInterface;
+use SocialConnect\Common\HttpClient;
+
 class Nexmo implements ProviderInterface
 {
-    public function request($uri)
-    {
+    use HttpClient;
 
+    /**
+     * @var array
+     */
+    protected $configuration;
+
+    /**
+     * @var string
+     */
+    private $baseUrl = 'https://rest.nexmo.com/';
+
+    public function __construct(array $configuration, ClientInterface $httpClient)
+    {
+        $this->configuration = $configuration;
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @param $uri
+     * @param array $parameters
+     * @return bool|string
+     */
+    public function request($uri, array $parameters = [])
+    {
+        $response = $this->httpClient->request($this->baseUrl . $uri, $parameters, Client::GET, [], []);
+        if ($response->isSuccess()) {
+            return json_decode($response->getBody());
+        }
+
+        return false;
     }
 
     public function getBalance()
