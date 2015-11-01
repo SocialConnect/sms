@@ -31,9 +31,21 @@ class ProviderFactory
         $this->httpClient = $httpClient;
     }
 
+    public function getProviderConfig($name)
+    {
+        $name = strtolower($name);
+
+        if (isset($this->configuration['provider'][$name])) {
+            return $this->configuration['provider'][$name];
+        }
+
+        throw new \RuntimeException('No config for provider ' . $name);
+    }
+
     public function factory($name)
     {
-        $className = $this->map[strtolower($name)];
-        return new $className;
+        $className = 'SocialConnect\\SMS\\Provider\\' . $this->map[strtolower($name)];
+
+        return new $className($this->getProviderConfig($name), $this->httpClient);
     }
 }
