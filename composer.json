@@ -1,0 +1,21 @@
+{
+    "name": "socialconnect/sms",
+    "description": "Send SMS easy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Patsura",
+            "email": "talk@dmtry.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-json": "*",
+        "socialconnect/common": "~0.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SocialConnect\\SMS\\": "src/"
+        }
+    }
+}
