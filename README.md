@@ -5,7 +5,6 @@ SocialConnect SMS
 
 - [x] SMS.RU
 - [x] Nexmo
-- [ ] 
 
 # How to work
 
