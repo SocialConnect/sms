@@ -5,8 +5,10 @@
 
 namespace SocialConnect\SMS;
 
+use RuntimeException;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
+use SocialConnect\SMS\Provider\ProviderInterface;
 
 class ProviderFactory
 {
@@ -22,7 +24,8 @@ class ProviderFactory
      */
     protected $map = array(
         'smsru' => 'SMSRU',
-        'nexmo' => 'Nexmo'
+        'nexmo' => 'Nexmo',
+        'messagebird' => 'MessageBird',
     );
 
     /**
@@ -47,7 +50,7 @@ class ProviderFactory
             return $this->configuration['provider'][$name];
         }
 
-        throw new \RuntimeException('No config for provider ' . $name);
+        throw new RuntimeException('No config for provider ' . $name);
     }
 
     /**
