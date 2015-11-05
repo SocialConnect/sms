@@ -5,6 +5,7 @@
 
 namespace SocialConnect\SMS\Provider;
 
+use RuntimeException;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
@@ -57,11 +58,17 @@ class MessageBird implements ProviderInterface
         return false;
     }
 
+    /**
+     * @return float
+     */
     public function getBalance()
     {
-        $result = $this->request('balance');
+        $response = $this->request('balance');
+        if (!$response) {
+            throw new RuntimeException('Wrong response on account/get-balance');
+        }
 
-        return 0.0;
+        return (float) $response->amount;
     }
 
     /**
