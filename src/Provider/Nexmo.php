@@ -8,6 +8,7 @@ namespace SocialConnect\SMS\Provider;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
+use SocialConnect\SMS\Entity\SmsResult;
 
 class Nexmo implements ProviderInterface
 {
@@ -30,13 +31,26 @@ class Nexmo implements ProviderInterface
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      * @param array $parameters
-     * @return bool|string
+     * @param string $method
+     * @return bool|mixed
      */
-    public function request($uri, array $parameters = [])
+    public function request($uri, array $parameters = [], $method = Client::GET)
     {
-        $response = $this->httpClient->request($this->baseUrl . $uri, $parameters, Client::GET, [], []);
+        $baseParameters = array(
+            'api_key' => $this->configuration['key'],
+            'api_secret' => $this->configuration['secret']
+        );
+
+        $response = $this->httpClient->request(
+            $this->baseUrl . $uri,
+            array_merge($baseParameters, $parameters),
+            $method,
+            [],
+            []
+        );
+
         if ($response->isSuccess()) {
             return json_decode($response->getBody());
         }
@@ -51,8 +65,29 @@ class Nexmo implements ProviderInterface
         return 0.0;
     }
 
+    /**
+     * @param int|string $phone
+     * @param string $message
+     * @return bool|mixed
+     */
     public function send($phone, $message)
     {
-        // TODO: Implement send() method.
+        $response = $this->request(
+            'sms/json',
+            [
+                'from' => $this->configuration['from'],
+                'text' => $message,
+                'to' => $phone,
+                'type' => 'unicode'
+            ],
+            Client::GET
+        );
+
+        if ($response) {
+            $result = current($response->messages);
+            return new SmsResult($result->{"message-id"});
+        }
+
+        return false;
     }
 }
