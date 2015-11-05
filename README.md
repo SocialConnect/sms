@@ -36,6 +36,18 @@ Next, you need to get provider:
 $provider = $service->factory('smsru');
 ```
 
+You can send `sms`:
+
+```php
+$provider->send('+79999999', 'Hello, World!');
+```
+
+Or get `balance`:
+
+```php
+var_dump($provider->getBalance());
+```
+
 # License
 
 This project is open-sourced software licensed under the MIT License.
