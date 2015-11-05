@@ -47,8 +47,7 @@ class MessageBird implements ProviderInterface
             $method,
             [
                 'Authorization' => 'AccessKey ' . $this->configuration['secret']
-            ],
-            []
+            ]
         );
 
         if ($response->isSuccess()) {
@@ -83,7 +82,8 @@ class MessageBird implements ProviderInterface
             [
                 'originator' => $this->configuration['from'],
                 'body' => $message,
-                'recipients' => $phone
+                'recipients' => $phone,
+                'datacoding' => 'unicode'
             ],
             Client::POST
         );
