@@ -5,6 +5,7 @@
 
 namespace SocialConnect\SMS\Provider;
 
+use RuntimeException;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
@@ -58,11 +59,17 @@ class Nexmo implements ProviderInterface
         return false;
     }
 
+    /**
+     * @return float
+     */
     public function getBalance()
     {
-        $result = $this->request('account/get-balance/');
+        $result = $this->request('account/get-balance');
+        if (!$result) {
+            throw new RuntimeException('Wrong response on account/get-balance');
+        }
 
-        return 0.0;
+        return (float) $result->value;
     }
 
     /**
