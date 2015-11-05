@@ -8,6 +8,7 @@ namespace SocialConnect\SMS\Provider;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
+use SocialConnect\SMS\Entity\SmsResult;
 
 class MessageBird implements ProviderInterface
 {
@@ -70,7 +71,7 @@ class MessageBird implements ProviderInterface
      */
     public function send($phone, $message)
     {
-        $result = $this->request(
+        $response = $this->request(
             'messages',
             [
                 'originator' => $this->configuration['from'],
@@ -80,6 +81,10 @@ class MessageBird implements ProviderInterface
             Client::POST
         );
 
-        var_dump($result);
+        if ($response) {
+            return new SmsResult($response->id);
+        }
+
+        return false;
     }
 }
