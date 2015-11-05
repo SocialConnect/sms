@@ -24,8 +24,7 @@ interface ProviderInterface
     /**
      * @param string|integer $phone
      * @param string $message
-     * @return mixed
+     * @return \Socialconnect\SMS\Entity\SmsResult|boolean
      */
     public function send($phone, $message);
-
 }
