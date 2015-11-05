@@ -12,7 +12,7 @@ First, you need to setup `ProviderFactory`:
 
 ```php
 use SocialConnect\Common\Http\Client\Curl;
-use SocialConnect\SMS\Provider\ProviderFactory;
+use SocialConnect\SMS\ProviderFactory;
 
 include_once __DIR__ . '/vendor/autoload.php';
 
