@@ -5,6 +5,7 @@ SocialConnect SMS
 
 - [x] SMS.RU
 - [x] Nexmo
+- [x] MessageBird
 
 # How to work
 
