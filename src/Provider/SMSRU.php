@@ -36,19 +36,31 @@ class SMSRU implements ProviderInterface
      */
     public function request($uri, array $parameters = [])
     {
-        $response = $this->httpClient->request($this->baseUrl . $uri, $parameters, Client::GET, [], []);
+        $baseParameters = [
+            'api_id' => $this->configuration['appId']
+        ];
+
+        $response = $this->httpClient->request($this->baseUrl . $uri, array_merge($baseParameters, $parameters), Client::GET, [], []);
         if ($response->isSuccess()) {
-            return json_decode($response->getBody());
+            list($code, $result) = explode("\n", $response->getBody());
+
+            if ($code == '100') {
+                echo $result;
+            }
+
+            return false;
         }
 
         return false;
     }
 
+    /**
+     * @return float
+     */
     public function getBalance()
     {
-        $result = $this->request('my/balance');
-
-        return 0.0;
+        $response = $this->request('my/balance');
+        return (float) $response;
     }
 
     public function send($phone, $message)
