@@ -75,7 +75,7 @@ class Nexmo implements ProviderInterface
     /**
      * @param int|string $phone
      * @param string $message
-     * @return bool|mixed
+     * @return bool|SmsResult
      */
     public function send($phone, $message)
     {
