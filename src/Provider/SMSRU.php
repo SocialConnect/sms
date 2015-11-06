@@ -53,6 +53,12 @@ class SMSRU implements ProviderInterface
 
     public function send($phone, $message)
     {
-        // TODO: Implement send() method.
+        $response = $this->request(
+            'sms/send',
+            [
+                'to' => $phone,
+                'text' => $message
+            ]
+        );
     }
 }
