@@ -8,6 +8,7 @@ namespace SocialConnect\SMS\Provider;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
+use SocialConnect\SMS\Entity\SmsResult;
 
 class SMSRU implements ProviderInterface
 {
@@ -42,10 +43,10 @@ class SMSRU implements ProviderInterface
 
         $response = $this->httpClient->request($this->baseUrl . $uri, array_merge($baseParameters, $parameters), Client::GET, [], []);
         if ($response->isSuccess()) {
-            list($code, $result) = explode("\n", $response->getBody());
+            $parts = explode("\n", $response->getBody());
 
-            if ($code == '100') {
-                echo $result;
+            if ($parts[0] == '100') {
+                return $parts[1];
             }
 
             return false;
@@ -63,6 +64,11 @@ class SMSRU implements ProviderInterface
         return (float) $response;
     }
 
+    /**
+     * @param int|string $phone
+     * @param string $message
+     * @return bool|SmsResult
+     */
     public function send($phone, $message)
     {
         $response = $this->request(
@@ -72,5 +78,11 @@ class SMSRU implements ProviderInterface
                 'text' => $message
             ]
         );
+
+        if ($response) {
+            return new SmsResult($response);
+        }
+
+        return false;
     }
 }
