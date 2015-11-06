@@ -3,9 +3,9 @@ SocialConnect SMS
 
 ## Supported providers
 
-- [x] SMS.RU
 - [x] Nexmo
 - [x] MessageBird
+- [x] SMS.RU
 
 # How to work
 
