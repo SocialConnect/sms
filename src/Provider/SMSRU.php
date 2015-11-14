@@ -9,6 +9,7 @@ use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
 use SocialConnect\SMS\Entity\SmsResult;
+use SocialConnect\SMS\Exception\InvalidConfigParameter;
 
 class SMSRU implements ProviderInterface
 {
@@ -28,6 +29,10 @@ class SMSRU implements ProviderInterface
     {
         $this->configuration = $configuration;
         $this->httpClient = $httpClient;
+
+        if (empty($this->configuration['appId'])) {
+            throw new InvalidConfigParameter('Secret cannot be empty!');
+        }
     }
 
     /**
