@@ -10,6 +10,7 @@ use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
 use SocialConnect\SMS\Entity\SmsResult;
+use SocialConnect\SMS\Exception;
 
 class MessageBird implements ProviderInterface
 {
@@ -31,6 +32,14 @@ class MessageBird implements ProviderInterface
     {
         $this->configuration = $configuration;
         $this->httpClient = $httpClient;
+
+        if (empty($this->configuration['secret'])) {
+            throw new Exception('Secret cannot be empty!');
+        }
+
+        if (empty($this->configuration['from'])) {
+            throw new Exception('From cannot be empty!');
+        }
     }
 
     /**
