@@ -31,7 +31,7 @@ class SMSRU implements ProviderInterface
         $this->httpClient = $httpClient;
 
         if (empty($this->configuration['appId'])) {
-            throw new InvalidConfigParameter('Secret cannot be empty!');
+            throw new InvalidConfigParameter('appId cannot be empty!');
         }
     }
 
