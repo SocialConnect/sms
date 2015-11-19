@@ -5,7 +5,6 @@
 
 namespace SocialConnect\SMS\Provider;
 
-
 use SocialConnect\Common\Http\Client\ClientInterface;
 
 interface ProviderInterface
