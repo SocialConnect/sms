@@ -7,7 +7,25 @@ SocialConnect SMS
 - [x] MessageBird
 - [x] SMS.RU
 
-# How to work
+## Installation
+
+Add a requirement to your `composer.json`:
+
+```json
+{
+    "require": {
+        "socialconnect/sms": "*"
+    }
+}
+```
+
+Run the composer installer:
+
+```bash
+php composer.phar install
+```
+
+## How to work
 
 First, you need to setup `ProviderFactory`:
 
