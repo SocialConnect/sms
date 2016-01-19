@@ -36,7 +36,7 @@ class SMSRU implements ProviderInterface
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      * @param array $parameters
      * @return bool|string
      */
