@@ -26,6 +26,7 @@ class ProviderFactory
         'smsru' => 'SMSRU',
         'nexmo' => 'Nexmo',
         'messagebird' => 'MessageBird',
+        'smspilot' => 'SMSPilot'
     );
 
     /**
