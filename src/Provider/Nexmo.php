@@ -9,8 +9,8 @@ use RuntimeException;
 use SocialConnect\Common\Http\Client\Client;
 use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
+use SocialConnect\SMS\Entity\NexmoSmsResult;
 use SocialConnect\SMS\Entity\SmsResult;
-use SocialConnect\SMS\Exception\InvalidConfigParameter;
 
 class Nexmo implements ProviderInterface
 {
@@ -30,14 +30,6 @@ class Nexmo implements ProviderInterface
     {
         $this->configuration = $configuration;
         $this->httpClient = $httpClient;
-
-        if (empty($this->configuration['key'])) {
-            throw new InvalidConfigParameter('Key cannot be empty!');
-        }
-
-        if (empty($this->configuration['secret'])) {
-            throw new InvalidConfigParameter('Secret cannot be empty!');
-        }
     }
 
     /**
@@ -84,7 +76,7 @@ class Nexmo implements ProviderInterface
     /**
      * @param int|string $phone
      * @param string $message
-     * @return bool|SmsResult
+     * @return bool|mixed
      */
     public function send($phone, $message)
     {
@@ -101,7 +93,16 @@ class Nexmo implements ProviderInterface
 
         if ($response) {
             $result = current($response->messages);
-            return new SmsResult($result->{"message-id"});
+
+            $messageId = null;
+            if (isset($result->{"message-id"})) {
+                $messageId = $result->{"message-id"};
+            }
+
+            return new NexmoSmsResult(
+                $messageId,
+                $result->status
+            );
         }
 
         return false;
