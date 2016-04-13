@@ -5,7 +5,7 @@
 
 namespace SocialConnect\SMS\Entity;
 
-class SmsResult
+class SmsResult implements SmsResultInterface
 {
     /**
      * @var string|integer
@@ -26,5 +26,13 @@ class SmsResult
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return (bool) $this->id;
     }
 }
