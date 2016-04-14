@@ -5,7 +5,7 @@
 
 namespace SocialConnect\SMS\Entity;
 
-use socialconnect\sms\src\Provider\NexmoSmsStatusCode;
+use SocialConnect\SMS\Provider\NexmoSmsStatusCode;
 
 class NexmoSmsResult extends SmsResult
 {
