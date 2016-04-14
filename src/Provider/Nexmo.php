@@ -11,6 +11,7 @@ use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
 use SocialConnect\SMS\Entity\NexmoSmsResult;
 use SocialConnect\SMS\Entity\SmsResult;
+use SocialConnect\SMS\Exception\ResponseErrorException;
 
 class Nexmo implements ProviderInterface
 {
@@ -57,7 +58,7 @@ class Nexmo implements ProviderInterface
             return $response->json();
         }
 
-        return false;
+        return new ResponseErrorException($response->getBody(), $response->getStatusCode());
     }
 
     /**
