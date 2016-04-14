@@ -39,6 +39,7 @@ class Nexmo implements ProviderInterface
      * @param array $parameters
      * @param string $method
      * @return bool|mixed
+     * @throws \SocialConnect\SMS\Exception\ResponseErrorException
      */
     public function request($uri, array $parameters = [], $method = Client::GET)
     {
@@ -79,6 +80,7 @@ class Nexmo implements ProviderInterface
      * @param int|string $phone
      * @param string $message
      * @return bool|mixed
+     * @throws \SocialConnect\SMS\Exception\LogickException
      */
     public function send($phone, $message)
     {
