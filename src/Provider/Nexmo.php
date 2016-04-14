@@ -54,7 +54,7 @@ class Nexmo implements ProviderInterface
         );
 
         if ($response->isSuccess()) {
-            return json_decode($response->getBody());
+            return $response->json();
         }
 
         return false;
