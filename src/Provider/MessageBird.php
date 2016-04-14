@@ -11,6 +11,7 @@ use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
 use SocialConnect\SMS\Entity\SmsResult;
 use SocialConnect\SMS\Exception\InvalidConfigParameter;
+use SocialConnect\SMS\Exception\ResponseErrorException;
 
 class MessageBird implements ProviderInterface
 {
@@ -63,7 +64,13 @@ class MessageBird implements ProviderInterface
             return json_decode($response->getBody());
         }
 
-        return false;
+        $result = $response->json();
+        if ($result && $result->errors) {
+            $error = $result->errors[0];
+            throw new ResponseErrorException($error->description, $error->code);
+        }
+
+        throw new ResponseErrorException('Uknown exception');
     }
 
     /**
@@ -80,15 +87,29 @@ class MessageBird implements ProviderInterface
     }
 
     /**
+     * @param $id
+     * @return bool|object
+     */
+    public function getResult($id)
+    {
+        return $this->request(
+            'messages/' . $id,
+            [],
+            Client::GET
+        );
+    }
+
+    /**
      * @param int|string $phone
      * @param string $message
-     * @return bool|mixed
+     * @return SmsResult|bool
      */
     public function send($phone, $message)
     {
         $response = $this->request(
             'messages',
             [
+                'type' => 'sms',
                 'originator' => $this->configuration['from'],
                 'body' => $message,
                 'recipients' => $phone,
