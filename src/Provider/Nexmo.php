@@ -11,7 +11,7 @@ use SocialConnect\Common\Http\Client\ClientInterface;
 use SocialConnect\Common\HttpClient;
 use SocialConnect\SMS\Entity\NexmoSmsResult;
 use SocialConnect\SMS\Entity\SmsResult;
-use SocialConnect\SMS\Exception\LogickException;
+use SocialConnect\SMS\Exception\LogicException;
 use SocialConnect\SMS\Exception\ResponseErrorException;
 
 class Nexmo implements ProviderInterface
@@ -65,13 +65,14 @@ class Nexmo implements ProviderInterface
 
     /**
      * @return float
-     * @throws \SocialConnect\SMS\Exception\LogickException
+     * @throws \SocialConnect\SMS\Exception\ResponseErrorException
+     * @throws \SocialConnect\SMS\Exception\LogicException
      */
     public function getBalance()
     {
         $result = $this->request('account/get-balance');
         if (!$result) {
-            throw new LogickException('Wrong response on account/get-balance');
+            throw new LogicException('Wrong response on account/get-balance');
         }
 
         return (float) $result->value;
@@ -82,7 +83,7 @@ class Nexmo implements ProviderInterface
      * @param string $message
      * @return bool|mixed
      * @throws \SocialConnect\SMS\Exception\ResponseErrorException
-     * @throws \SocialConnect\SMS\Exception\LogickException
+     * @throws \SocialConnect\SMS\Exception\LogicException
      */
     public function send($phone, $message)
     {
@@ -111,6 +112,6 @@ class Nexmo implements ProviderInterface
             );
         }
 
-        throw new LogickException('Response is null');
+        throw new LogicException('Response is null');
     }
 }

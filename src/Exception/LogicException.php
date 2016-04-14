@@ -7,7 +7,7 @@ namespace SocialConnect\SMS\Exception;
 
 use SocialConnect\SMS\Exception;
 
-class LogickException extends Exception
+class LogicException extends Exception
 {
 
 }
