@@ -65,12 +65,13 @@ class Nexmo implements ProviderInterface
 
     /**
      * @return float
+     * @throws \SocialConnect\SMS\Exception\LogickException
      */
     public function getBalance()
     {
         $result = $this->request('account/get-balance');
         if (!$result) {
-            throw new RuntimeException('Wrong response on account/get-balance');
+            throw new LogickException('Wrong response on account/get-balance');
         }
 
         return (float) $result->value;
@@ -80,6 +81,7 @@ class Nexmo implements ProviderInterface
      * @param int|string $phone
      * @param string $message
      * @return bool|mixed
+     * @throws \SocialConnect\SMS\Exception\ResponseErrorException
      * @throws \SocialConnect\SMS\Exception\LogickException
      */
     public function send($phone, $message)
